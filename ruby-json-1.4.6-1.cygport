@@ -1,0 +1,28 @@
+ORIG_PN="json"
+inherit ruby
+
+
+HOMEPAGE="http://flori.github.com/json/"
+SRC_URI="http://www.ping.de/~flori/json-${PV}.tgz"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	rake || error "rake failed"
+	rdoc -U --ri --op ${B}/.rdoc lib/ ext/
+}
+
+src_test() {
+	cd ${B}
+	rake test
+}
+
+src_install() {
+	cd ${B}
+	doruby lib/json*
+	rubyinto json/ext
+	doruby ext/json/ext/*.so
+
+	dodir ${RI_SITEDIR}
+	cp -r ${B}/.rdoc/JSON ${D}${RI_SITEDIR}/
+}
