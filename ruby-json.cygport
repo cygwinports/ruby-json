@@ -1,0 +1,8 @@
+inherit rubygem
+
+NAME="ruby-json"
+VERSION=1.7.6
+RELEASE=1
+CATEGORY="Ruby"
+SUMMARY="Ruby JSON module"
+DESCRIPTION="This is a JSON implementation as a Ruby extension in C."
