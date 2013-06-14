@@ -1,7 +1,7 @@
 inherit rubygem
 
 NAME="ruby-json"
-VERSION=1.7.7
+VERSION=1.8.0
 RELEASE=1
 CATEGORY="Ruby"
 SUMMARY="Ruby JSON module"
