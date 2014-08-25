@@ -6,3 +6,15 @@ RELEASE=1
 CATEGORY="Ruby"
 SUMMARY="Ruby JSON module"
 DESCRIPTION="This is a JSON implementation as a Ruby extension in C."
+
+PKG_NAMES="${NAME} ${NAME}-doc"
+ruby_json_CONTENTS=${RUBYGEM_EXTDIR#/}" "${RUBYGEM_INSTDIR#/}" "${RUBYGEM_SPEC#/}
+ruby_json_doc_CONTENTS=${RUBYGEM_DOCDIR#/}
+
+src_install() {
+	cd ${S}
+	rubygem_install
+
+	rm -fr ${D}${RUBYGEM_INSTDIR}/{diagrams,java,tests}/
+	rm -fr ${D}${RUBYGEM_INSTDIR}/lib/json/pure*
+}
