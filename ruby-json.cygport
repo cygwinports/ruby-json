@@ -1,19 +1,32 @@
 inherit rubygem
 
 NAME="ruby-json"
-VERSION=1.8.6
+VERSION=2.0.4
 RELEASE=1
 CATEGORY="Ruby"
 SUMMARY="Ruby JSON module"
 DESCRIPTION="This is a JSON implementation as a Ruby extension in C."
 
 PKG_NAMES="${NAME} ${NAME}-doc"
-ruby_json_CONTENTS=${RUBYGEM_EXTDIR#/}" "${RUBYGEM_INSTDIR#/}" "${RUBYGEM_SPEC#/}
+ruby_json_CONTENTS="
+	${RUBY_ARCH#/}
+	${RUBY_LIB#/}
+	${RUBYGEM_EXTDIR#/}
+	${RUBYGEM_INSTDIR#/}
+	${RUBYGEM_SPEC#/}
+"
 ruby_json_doc_CONTENTS=${RUBYGEM_DOCDIR#/}
 
 src_install() {
 	cd ${S}
 	rubygem_install
+
+	# This is required (wrapped) by 'active_support/core_ext/object/json'
+	dodir ${RUBY_ARCH}/json
+	dosym ${RUBYGEM_EXTDIR}/json/ext ${RUBY_ARCH}/json/
+	dodir ${RUBY_LIB}
+	dosym ${RUBYGEM_INSTDIR}/lib/json.rb ${RUBY_LIB}
+	dosym ${RUBYGEM_INSTDIR}/lib/json ${RUBY_LIB}
 
 	rm -fr ${D}${RUBYGEM_INSTDIR}/{diagrams,java,tests}/
 	rm -fr ${D}${RUBYGEM_INSTDIR}/lib/json/pure*
